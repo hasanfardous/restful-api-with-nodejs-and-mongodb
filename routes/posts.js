@@ -4,62 +4,43 @@ const Post = mongoose.model('Post');
 
 //Get all entries
 router.get('/', async (req, res) => {
-    try {
-        const posts = await Post.find({})
-        res.send(posts)
-    } catch (error) {
-        res.status(500)
-    }
+    const posts = await Post.find({})
+    res.send(posts)
+
 });
 
 //Record a new entry
 router.post('/', async (req, res) => {
-    try {
-        const post = new Post();
-        post.title = req.body.title;
-        post.content = req.body.content;
-        await post.save();
-        res.send(post);
-    } catch (error) {
-        res.status(500)
-    }
+    const post = new Post();
+    post.title = req.body.title;
+    post.content = req.body.content;
+    await post.save();
+    res.send(post);
 });
 
 //Find a entry by id
 router.get('/:postId', async (req, res) => {
-    try {
-        const post = await Post.findOne({ _id: req.params.postId });
-        res.send(post);
-    } catch (error) {
-        res.status(500)
-    }
+    const post = await Post.findOne({ _id: req.params.postId });
+    res.send(post);
 });
 
 //Update entry
 router.put('/:postId', async (req, res) => {
-    try {
-        const post = await Post.findByIdAndUpdate({
-            _id: req.params.postId
-        }, req.body, {
-            new: true,
-            runValidators: true
-        });
-        res.send(post);
-    } catch (error) {
-        res.status(500)
-    }
+    const post = await Post.findByIdAndUpdate({
+        _id: req.params.postId
+    }, req.body, {
+        new: true,
+        runValidators: true
+    });
+    res.send(post);
 });
 
 //Delete entry
 router.delete('/:postId', async (req, res) => {
-    try {
     const post = await Post.findByIdAndRemove({
         _id: req.params.postId
     }); 
     res.send(post);
-    } catch (error) {
-        res.status(500)
-    }
 });
 
 module.exports = router;

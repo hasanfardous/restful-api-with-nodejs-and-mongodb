@@ -1,4 +1,5 @@
 const express = require('express');
+require('express-async-errors');
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -16,6 +17,21 @@ app.use(bodyParser.json())
 
 //Routes
 app.use('/posts', require('./routes/posts'));
+
+//While routes goes to wrong
+app.use((req, res, next) => {
+    req.status = 404;
+    const error = new Error('Routes not found!');
+    next(error);
+});
+
+//Error handler
+app.use((error, req, res, next) => {
+    res.status(req.status || 500).send({
+        message: error.message,
+        stack: error.stack
+    });
+});
 
 //Server
 app.listen(3001, () => {
