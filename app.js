@@ -26,6 +26,14 @@ app.use((req, res, next) => {
 });
 
 //Error handler
+if(app.get('env') === 'production'){
+    app.use((error, req, res, next) => {
+        res.status(req.status || 500).send({
+            message: error.message
+        });
+    });
+}
+
 app.use((error, req, res, next) => {
     res.status(req.status || 500).send({
         message: error.message,
