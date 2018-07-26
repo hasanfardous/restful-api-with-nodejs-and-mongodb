@@ -9,7 +9,8 @@ const morgan = require('morgan');
 require('./mongo');
 
 //Models
-require('./model/Post')
+require('./model/Post');
+require('./model/Comment');
 
 //Middleware
 app.use(bodyParser.json())

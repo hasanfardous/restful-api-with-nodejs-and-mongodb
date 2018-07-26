@@ -9,7 +9,14 @@ const post_schema = new mongoose.Schema(
         content: {
             type: String,
             required: "Content is required"
-        }
+        },
+        comments: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Comment",
+                required: "Comment is required"   
+            }
+        ]
     },
     {
         timestamps: true
