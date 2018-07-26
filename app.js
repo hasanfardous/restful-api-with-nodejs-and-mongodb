@@ -18,6 +18,7 @@ app.use(bodyParser.json())
 
 //Routes
 app.use('/posts', require('./routes/posts'));
+app.use('/comments', require('./routes/comments'));
 
 //While routes goes to wrong
 app.use((req, res, next) => {
