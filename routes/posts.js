@@ -63,4 +63,11 @@ router.post('/:postId/comment', async (req, res) => {
     res.send(comment);
 });
 
+//individual comments show with every posts
+router.get('/:postId/comment', async (req, res) => {
+    const post = await Post.findOne({_id: req.params.postId}).populate('comments');
+    
+    res.send(post);
+});
+
 module.exports = router;
