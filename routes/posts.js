@@ -5,7 +5,7 @@ const Comment = mongoose.model('Comment');
 
 //Get all entries
 router.get('/', async (req, res) => {
-    const posts = await Post.find({})
+    const posts = await Post.find({}).populate('comments');
     res.send(posts)
 
 });
@@ -68,6 +68,26 @@ router.get('/:postId/comment', async (req, res) => {
     const post = await Post.findOne({_id: req.params.postId}).populate('comments');
     
     res.send(post);
+});
+
+//Update a comment
+router.put('/comment/:commentId', async (req, res) => {
+    const comment = await Comment.findByIdAndUpdate({
+        _id: req.params.commentId
+    }, req.body, {
+        new: true,
+        runValidators: true
+    });
+
+    res.send(comment);
+});
+
+//delete a comment
+router.delete('/comment/:commentId', async (req, res) => {
+    const comment = await Comment.findByIdAndDelete(req.params.commentId);
+    res.send({
+        message: "Comment deleted that is " + req.params.commentId
+    });
 });
 
 module.exports = router;
